@@ -2,7 +2,7 @@ const model = require("../model/app_model");
 
 exports.getNotes = async (req, res) => {
   try {
-    const note = await model.find().sort({ createdAt: -1 });
+    const note = await model.find({ user: req.user.id });
     if (!note) {
       return res.status(404).json({
         message: "Notes not found!",
@@ -38,6 +38,7 @@ exports.createNote = async (req, res) => {
     const data = await model.create({
       title,
       content,
+      user: req.user.id,
     });
     if (!data) {
       return res.status(404).json({

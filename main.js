@@ -1,6 +1,7 @@
 const server = require("express");
 const client = server();
 const cors = require("cors");
+const authroute = require("../notes_app_backened/routes/auth_route");
 const database = require("./config/db");
 const router = require("./routes/app_route");
 require("dotenv").config();
@@ -10,6 +11,7 @@ client.use(server.json());
 client.get("/", (req, res) => {
   res.send("Boah! Api are working fine..........");
 });
+client.use("/api/auth", authroute);
 client.use("/api/note", router);
 client.listen(process.env.PORT, () => {
   console.log(
